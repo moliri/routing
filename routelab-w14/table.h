@@ -3,14 +3,17 @@
 
 
 #include <iostream>
+#include <map>
+#include "limits"
 
 using namespace std;
 
 #if defined(GENERIC)
 class Table {
-  // Students should write this class
-
  public:
+    map<int,double> costTable;
+	double findCost(int destNode);
+	void updateCost(int destNode, double newCost);
   ostream & Print(ostream &os) const;
 };
 #endif
@@ -34,7 +37,7 @@ struct Row {
   unsigned next_node;
   double cost;
   ostream &Print(ostream &os) const;
-  
+
   Row(unsigned dest, unsigned next, double cost);
 };
 
