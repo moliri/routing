@@ -3,37 +3,37 @@
 #include "error.h"
 
 
-Node::Node(const unsigned n, SimulationContext *c, double b, double l) : 
-    number(n), context(c), bw(b), lat(l) 
+Node::Node(const unsigned n, SimulationContext *c, double b, double l) :
+    number(n), context(c), bw(b), lat(l)
 {}
 
-Node::Node() 
+Node::Node()
 { throw GeneralException(); }
 
-Node::Node(const Node &rhs) : 
+Node::Node(const Node &rhs) :
   number(rhs.number), context(rhs.context), bw(rhs.bw), lat(rhs.lat) {}
 
-Node & Node::operator=(const Node &rhs) 
+Node & Node::operator=(const Node &rhs)
 {
   return *(new(this)Node(rhs));
 }
 
-void Node::SetNumber(const unsigned n) 
+void Node::SetNumber(const unsigned n)
 { number=n;}
 
-unsigned Node::GetNumber() const 
+unsigned Node::GetNumber() const
 { return number;}
 
-void Node::SetLatency(const double l) 
+void Node::SetLatency(const double l)
 { lat=l;}
 
-double Node::GetLatency() const 
+double Node::GetLatency() const
 { return lat;}
 
-void Node::SetBW(const double b) 
+void Node::SetBW(const double b)
 { bw=b;}
 
-double Node::GetBW() const 
+double Node::GetBW() const
 { return bw;}
 
 Node::~Node()
@@ -127,7 +127,7 @@ void Node::ProcessIncomingRoutingMessage(const RoutingMessage *m)
     cerr << " IGNORED"<<endl;
   } else {
     // update our table
-    if (m->ttl==0) { 
+    if (m->ttl==0) {
       cerr << " DROPPED, TTL=0"<<endl;
     } else {
       // Forward to neighbors
@@ -169,8 +169,8 @@ ostream & Node::Print(ostream &os) const
 
 void Node::LinkUpdate(const Link *l)
 {
-  // update our table
-  // send out routing mesages
+    //update the link cost in the cost table
+    costTable[l->dest] = l->lat;
   cerr << *this<<": Link Update: "<<*l<<endl;
 }
 
@@ -180,7 +180,7 @@ void Node::ProcessIncomingRoutingMessage(const RoutingMessage *m)
   cerr << "Node "<<GetNumber()<<": "<<m->srcnode.GetNumber()<<" has new cost "<<m->cost
        <<" path to "<<m->dest.GetNumber()<<" Action: ";
 
-  if (m->dest.GetNumber()==GetNumber()) { 
+  if (m->dest.GetNumber()==GetNumber()) {
     cerr << " ourself - ignored\n";
     return;
   }

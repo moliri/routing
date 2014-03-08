@@ -4,6 +4,7 @@
 #include <new>
 #include <iostream>
 #include <deque>
+#include "table.h"
 
 
 class RoutingMessage;
@@ -19,6 +20,8 @@ class Node {
  private:
   unsigned number;
   SimulationContext    *context;
+  Table costTable;
+
   double   bw;
   double   lat;
 
@@ -30,7 +33,7 @@ class Node {
 #if defined(DISTANCEVECTOR)
   Table table;
 #endif
-  
+
   // students will add protocol-specific data here
 
  public:
@@ -41,7 +44,7 @@ class Node {
   virtual ~Node();
 
   virtual bool Matches(const Node &rhs) const;
-  
+
   virtual void SetNumber(const unsigned n);
   virtual unsigned GetNumber() const;
 
