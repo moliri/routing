@@ -20,7 +20,7 @@ class Node {
  private:
   unsigned number;
   SimulationContext    *context;
-  Table costTable;
+  Table table;
 
   double   bw;
   double   lat;

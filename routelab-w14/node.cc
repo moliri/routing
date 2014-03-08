@@ -170,7 +170,8 @@ ostream & Node::Print(ostream &os) const
 void Node::LinkUpdate(const Link *l)
 {
     //update the link cost in the cost table
-    costTable[l->dest] = l->lat;
+    unsigned dest = l->GetDest();
+    table.costTable[dest] = l->GetLatency();
   cerr << *this<<": Link Update: "<<*l<<endl;
 }
 
