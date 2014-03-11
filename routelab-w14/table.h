@@ -25,7 +25,7 @@ class Table {
 };
 #endif
 
-#if defined(DISTANCEVECTOR)
+//#if defined(DISTANCEVECTOR)
 
 #include <deque>
 
@@ -54,7 +54,7 @@ class Table {
   void SetNext(const unsigned dest, const Row &r);
   ostream & Print(ostream &os) const;
 };
-#endif
+//#endif
 
 //inline ostream & operator<<(ostream &os, const Table &t) { return t.Print(os);}
 

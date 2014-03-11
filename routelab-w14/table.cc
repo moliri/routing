@@ -15,7 +15,7 @@ ostream & Table::Print(ostream &os) const
 
 #endif
 
-#if defined(DISTANCEVECTOR)
+//#if defined(DISTANCEVECTOR)
 
 /*deque<Row>::iterator Table::FindMatching(const unsigned dest)
 {
@@ -47,7 +47,7 @@ void Table::updateCost(int src, int dest, double newCost){
     pair<int,int> tmp(src,dest);
 	if(costTable.find(tmp)==costTable.end()){
 		cerr << "Couldn't find path " << src << " to " << dest << " in costTable.\n";
-	} else {
+	} else if (findCost(src,dest)!=newCost){
 		costTable[tmp]=newCost;
 	}
 }
@@ -79,4 +79,4 @@ ostream & Table::Print(ostream &os) const
 }
 */
 
-#endif
+//#endif
