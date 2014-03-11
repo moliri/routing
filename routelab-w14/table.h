@@ -11,9 +11,6 @@ using namespace std;
 #if defined(GENERIC)
 class Table {
  public:
-    map<int,double> costTable;
-	double findCost(int destNode);
-	void updateCost(int destNode, double newCost);
   ostream & Print(ostream &os) const;
 };
 #endif
@@ -46,6 +43,12 @@ inline ostream & operator<<(ostream &os, const Row &r) { return r.Print(os);}
 class Table {
   deque<Row> m;
  public:
+
+    //first int is source, second dest. double is cost
+    map<pair<int,int>,double> costTable;
+	double findCost(int srcNode,int destNode);
+	void updateCost(int srcNode, int destNode, double newCost);
+	void insertCost(int src, int dest, double newCost);
   deque<Row>::iterator FindMatching(const unsigned dest);
   Row *GetNext(const unsigned dest);
   void SetNext(const unsigned dest, const Row &r);
@@ -53,6 +56,6 @@ class Table {
 };
 #endif
 
-inline ostream & operator<<(ostream &os, const Table &t) { return t.Print(os);}
+//inline ostream & operator<<(ostream &os, const Table &t) { return t.Print(os);}
 
 #endif
