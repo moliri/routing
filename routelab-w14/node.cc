@@ -170,21 +170,43 @@ ostream & Node::Print(ostream &os) const
 void Node::LinkUpdate(const Link *l)
 {
     //update the link cost in the cost table
-    unsigned dest = l->GetDest();
-    table.costTable[dest] = l->GetLatency();
-  cerr << *this<<": Link Update: "<<*l<<endl;
+    int dest = l->GetDest();
+    int src = l->GetDest();
+    double newCost = l->GetLatency();
+    pair<int,int> path(src,dest);
+
+    //the update is new
+    if(table.costTable.findCost(path) != newCost){
+            table.costTable.updateCost(src,dest,newCost);
+            cerr << *this<<": Link Update: "<<*l<<endl;
+            RoutingMessage *m = new RoutingMessage(m->srcnode,m->dest,newCost);
+            SendToNeighbors(m);
+    }
+    //else do nothing
 }
 
 
 void Node::ProcessIncomingRoutingMessage(const RoutingMessage *m)
 {
+
+    double newCost = m->cost;
+    int src = m->srcnode.GetNumber();
+    int dest = m->dest.GetNumber();
+    pair<int,int> path(src,dest);
+
   cerr << "Node "<<GetNumber()<<": "<<m->srcnode.GetNumber()<<" has new cost "<<m->cost
        <<" path to "<<m->dest.GetNumber()<<" Action: ";
 
-  if (m->dest.GetNumber()==GetNumber()) {
+  if ((src==GetNumber())|| (dest == GetNumber())) {
     cerr << " ourself - ignored\n";
     return;
-  }
+  } else if (newCost!=table.costTable.findCost(path)){
+        //we have a change in the cost, update the table
+        table.costTable.updateCost(src,dest,newCost);
+        //send a message
+        RoutingMessage *m = new RoutingMessage(m->srcnode,m->dest,newCost);
+        SendToNeighbors(m);
+    }
 
 }
 
@@ -200,6 +222,8 @@ Node *Node::GetNextHop(const Node *destination) const
 
 Table *Node::GetRoutingTable() const
 {
+    //not sure of the point of this
+    return table;
 }
 
 
