@@ -25,7 +25,7 @@ class Table {
 };
 #endif
 
-//#if defined(DISTANCEVECTOR)
+#if defined(DISTANCEVECTOR)
 
 #include <deque>
 
@@ -49,13 +49,14 @@ class Table {
 	double findCost(int srcNode,int destNode);
 	void updateCost(int srcNode, int destNode, double newCost);
 	void insertCost(int src, int dest, double newCost);
+	
   deque<Row>::iterator FindMatching(const unsigned dest);
   Row *GetNext(const unsigned dest);
   void SetNext(const unsigned dest, const Row &r);
   ostream & Print(ostream &os) const;
 };
-//#endif
+#endif
 
-//inline ostream & operator<<(ostream &os, const Table &t) { return t.Print(os);}
+inline ostream & operator<<(ostream &os, const Table &t) { return t.Print(os);}
 
 #endif

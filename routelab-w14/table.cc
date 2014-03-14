@@ -15,7 +15,7 @@ ostream & Table::Print(ostream &os) const
 
 #endif
 
-//#if defined(DISTANCEVECTOR)
+#if defined(DISTANCEVECTOR)
 
 /*deque<Row>::iterator Table::FindMatching(const unsigned dest)
 {
@@ -29,6 +29,8 @@ void Table::SetNext(const unsigned dest, const Row &r)
 {
 }
 */
+
+
 //Our Function Implementations here:
 //returns the estimated cost from src to destination
 double Table::findCost(int src, int dest){
@@ -79,4 +81,4 @@ ostream & Table::Print(ostream &os) const
 }
 */
 
-//#endif
+#endif

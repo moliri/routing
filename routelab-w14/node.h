@@ -4,22 +4,20 @@
 #include <new>
 #include <iostream>
 #include <deque>
+
+class RoutingMessage;
+class Table;
+class Link;
+class SimulationContext;
+
 #include "table.h"
-
-
-//class RoutingMessage;
-//class Table;
-//class Link;
-//class SimulationContext;
-
-
 using namespace std;
 
 class Node {
  private:
   unsigned number;
   SimulationContext    *context;
-  Table table;
+  //Table table;
 
   double   bw;
   double   lat;
@@ -31,11 +29,15 @@ class Node {
 
 #if defined(DISTANCEVECTOR)
   Table table;
-
+ 
+ #endif
 
   // students will add protocol-specific data here
 
  public:
+  
+  friend class Table;
+ 
   Node(const unsigned n, SimulationContext *c, double b, double l);
   Node();
   Node(const Node &rhs);
@@ -69,7 +71,6 @@ class Node {
   virtual ostream & Print(ostream &os) const;
 
 };
-#endif
 
 inline ostream & operator<<(ostream &os, const Node &n) { return n.Print(os);}
 
