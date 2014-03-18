@@ -173,11 +173,10 @@ void Node::LinkUpdate(const Link *l)
     int dest = l->GetDest();
     int src = l->GetDest();
     double newCost = l->GetLatency();
-    pair<int,int> path(src,dest);
 
     //the update is new
-    if(table.costTable.findCost(path) != newCost){
-            table.costTable.updateCost(src,dest,newCost);
+    if(table.findCost(src,dest) != newCost){
+            table.updateCost(src,dest,newCost);
             cerr << *this<<": Link Update: "<<*l<<endl;
             RoutingMessage *m = new RoutingMessage(m->srcnode,m->dest,newCost);
             SendToNeighbors(m);
@@ -190,9 +189,8 @@ void Node::ProcessIncomingRoutingMessage(const RoutingMessage *m)
 {
 
     double newCost = m->cost;
-    int src = m->srcnode.GetNumber();
-    int dest = m->dest.GetNumber();
-    pair<int,int> path(src,dest);
+    unsigned int src = m->srcnode.GetNumber();
+    unsigned int dest = m->dest.GetNumber();
 
   cerr << "Node "<<GetNumber()<<": "<<m->srcnode.GetNumber()<<" has new cost "<<m->cost
        <<" path to "<<m->dest.GetNumber()<<" Action: ";
@@ -200,9 +198,9 @@ void Node::ProcessIncomingRoutingMessage(const RoutingMessage *m)
   if ((src==GetNumber())|| (dest == GetNumber())) {
     cerr << " ourself - ignored\n";
     return;
-  } else if (newCost!=table.costTable.findCost(path)){
+  } else if (newCost!=table.findCost(src,dest)){
         //we have a change in the cost, update the table
-        table.costTable.updateCost(src,dest,newCost);
+        table.updateCost(src,dest,newCost);
         //send a message
         RoutingMessage *m = new RoutingMessage(m->srcnode,m->dest,newCost);
         SendToNeighbors(m);
@@ -218,19 +216,20 @@ void Node::TimeOut()
 
 Node *Node::GetNextHop(const Node *destination) const
 {
+	return NULL;
 }
 
 Table *Node::GetRoutingTable() const
 {
+	return NULL;
     //not sure of the point of this
-    return table;
 }
 
 
 ostream & Node::Print(ostream &os) const
 {
-  os << "Node(number="<<number<<", lat="<<lat<<", bw="<<bw;
-  os << ", table="<<table<<")";
+  //os << "Node(number="<<number<<", lat="<<lat<<", bw="<<bw;
+  //os << ", table="<<table<<")";
   return os;
 }
 #endif
