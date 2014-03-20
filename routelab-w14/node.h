@@ -16,7 +16,7 @@ using namespace std;
 class Node {
  private:
   unsigned number;
-  SimulationContext    *context;
+  struct SimulationContext    *context; //added
   //Table table;
 
   double   bw;

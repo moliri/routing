@@ -59,7 +59,7 @@ void Table::insertCost(int src, int dest, double newCost){
     costTable[tmp] = newCost;
 }
 
-/*
+
 Row::Row(const unsigned dest, const unsigned next, const double c) :
   dest_node(dest), next_node(next), cost(c)
 {}
@@ -70,6 +70,7 @@ ostream & Row::Print(ostream &os) const
   return os;
 }
 
+
 ostream & Table::Print(ostream &os) const
 {
   os<<"Table(rows={";
@@ -79,6 +80,6 @@ ostream & Table::Print(ostream &os) const
   os<<"})";
   return os;
 }
-*/
+
 
 #endif

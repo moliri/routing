@@ -8,6 +8,8 @@
 
 using namespace std;
 
+//test
+
 #if defined(GENERIC)
 class Table {
  public:
@@ -57,6 +59,6 @@ class Table {
 };
 #endif
 
-//inline ostream & operator<<(ostream &os, const Table &t) { return t.Print(os);}
+inline ostream & operator<<(ostream &os, const Table &t) { return t.Print(os);}
 
 #endif
